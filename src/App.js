@@ -1,8 +1,27 @@
-import React, { Component } from 'react';
-import logo from './logo.svg';
-import './App.css';
+import React, { Component } from "react";
+import logo from "./logo.svg";
+import "./App.css";
+import axios from "axios";
 
 class App extends Component {
+  state = {
+    articles: []
+  };
+
+  componentDidMount() {
+    axios
+      .get(
+        `https://api.nytimes.com/svc/topstories/v2/home.json?api-key=${
+          process.env.REACT_APP_NYT_API_KEY
+        }`
+      )
+      .then(res => {
+        const articles = res.data;
+        this.setState({ articles });
+        console.log(articles);
+      });
+  }
+
   render() {
     return (
       <div className="App">
