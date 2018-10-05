@@ -1,9 +1,9 @@
 import React from "react";
 // import DeleteBtn from "../../components/DeleteBtn";
 import Jumbotron from "../../components/Jumbotron";
-// import { Link } from "react-router-dom";
+import { Link } from "react-router-dom";
 import { Col, Row, Container } from "../../components/Grid";
-// import { List, ListItem } from "../../components/List";
+import { List, ListItem } from "../../components/List";
 import { Input, TextArea, FormBtn } from "../../components/Form";
 import axios from "axios";
 
@@ -37,7 +37,7 @@ class Articles extends React.Component {
         }`
       )
       .then(res => {
-        const articles = res.data;
+        const articles = res.data.response.docs;
         console.log(articles);
         this.setState({ articles });
       });
@@ -76,13 +76,24 @@ class Articles extends React.Component {
                 Search NYT
               </FormBtn>
             </form>
-            {/* <div>
-              <ul>
+          </Col>
+        </Row>
+        <Row>
+          <Col size="md-12">
+            {this.state.articles.length ? (
+              <div>
                 {this.state.articles.map(article => (
-                  <li>{article.response}</li>
+                  <div className="card m-2" key={article._id}>
+                    <div className="card-header" src={article.web_url}>
+                      {article.headline.main}
+                    </div>
+                    <div className="card-body">{article.snippet}</div>
+                  </div>
                 ))}
-              </ul>
-            </div> */}
+              </div>
+            ) : (
+              <h3>No Results to Display</h3>
+            )}
           </Col>
         </Row>
       </Container>
